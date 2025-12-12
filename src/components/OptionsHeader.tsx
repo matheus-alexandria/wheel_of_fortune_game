@@ -36,6 +36,7 @@ export function OptionsHeader({
       .post("/export", saveOptionsData, { responseType: "blob" })
       .then((response) => response.data)
       .then((data) => {
+        console.log(data);
         const url = window.URL.createObjectURL(new Blob([data]));
         const link = document.createElement("a");
         link.href = url;
