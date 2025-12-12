@@ -62,7 +62,7 @@ export function OptionsHeader({
   useEffect(() => {
     api
       .get("/healthcheck")
-      .then((res) => console.log(res))
+      .then((res) => console.log("Health check ok", res))
       .catch(() => {
         setIsServerOnline(false);
       });

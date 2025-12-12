@@ -53,7 +53,7 @@ export function ImportFormDropzone({
           setIsDropzoneDisabled(false);
         })
         .catch((reason) => {
-          console.log(reason.message);
+          console.log("Error while importing: ", reason.message);
         });
     }
   }
