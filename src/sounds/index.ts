@@ -6,20 +6,20 @@ interface SoundEffects {
 }
 
 const soundEffects: Record<string, Howl> = {
-  // spinningMusic: new Howl({
-  //   src: [
-  //     "https://github.com/matheus-alexandria/wheel_of_fortune_game/releases/download/game/MISTERY_BOX.wav"
-  //   ],
-  //   loop: true,
-  //   volume: 0.1,
-  //   preload: true,
-  //   format: ["wav"]
-  // }),
   spinningMusic: new Howl({
-    src: ["src/sounds/MISTERY_BOX.wav"],
+    src: [
+      "https://github.com/matheus-alexandria/wheel_of_fortune_game/releases/download/game/MISTERY_BOX.wav"
+    ],
     loop: true,
-    volume: 0.1
+    volume: 0.1,
+    preload: true,
+    format: ["wav"]
   }),
+  // spinningMusic: new Howl({
+  //   src: ["src/sounds/MISTERY_BOX.wav"],
+  //   loop: true,
+  //   volume: 0.1
+  // }),
   wheelTick: new Howl({
     src: [
       "https://github.com/matheus-alexandria/wheel_of_fortune_game/releases/download/game/57126__loofa__castanet-014.wav"
