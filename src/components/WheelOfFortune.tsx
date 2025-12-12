@@ -1,5 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 
+import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 import { WheelOptionModel } from "../model/WheelOptionModel";
 import { useSoundEffects } from "../sounds";
 import { adaptWheelTitle } from "../utils/adaptWheelTitle";
@@ -29,11 +37,13 @@ export function WheelOfFortune({
 }: WheelOfFortuneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [spin, setSpin] = useState(false);
-  const [winner, setWinner] = useState("");
+  const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
   const earlyStop = useRef(false);
   const timeoutIds = useRef<number[]>([]);
   const { wheelTick: wheelTickSound, spinningMusic: spinningSong } =
     useSoundEffects({ sounds: ["spinningMusic", "wheelTick"] });
+
+  const optionsContext = useContext(WheelOptionsContext);
 
   const optionsChancesSum = useMemo(() => {
     return options.reduce((prev, cur) => {
@@ -215,7 +225,7 @@ export function WheelOfFortune({
               finalArcEnd > (3 / 4) * endAngle
             ) {
               if (!earlyStop.current) {
-                setWinner(options[i].title);
+                setWinnerIndex(i);
               }
               setSpin(false);
             }
@@ -257,6 +267,15 @@ export function WheelOfFortune({
     });
   }
 
+  const removeWheelOption = (index: number) => {
+    if (!optionsContext) return;
+    const downsizedOptions = optionsContext.wheelOptions.filter(
+      (_, i) => i !== index
+    );
+    optionsContext.setWheelOptions(downsizedOptions);
+    setWinnerIndex(null);
+  };
+
   useEffect(() => {
     if (spin) {
       earlyStop.current = false;
@@ -278,20 +297,27 @@ export function WheelOfFortune({
   return (
     <>
       <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
-      {winner && (
+      {winnerIndex !== null && (
         <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="px-44 py-20 whitespace-nowrap flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900">
             <span className="h-3/4 flex items-center justify-center text-7xl text-white font-extrabold">
-              {winner}
+              {options[winnerIndex].title}
             </span>
           </div>
-          <div className="flex items-center justify-center mt-5">
+          <div className="flex items-center justify-center mt-5 gap-3">
             <button
               type="button"
-              className="bg-yellow-400 px-16 ring-yellow-500 hover:ring-1 p-2 rounded-lg font-medium text-xl hover:bg-yellow-500 transition-colors"
-              onClick={() => setWinner("")}
+              className="bg-yellow-400 px-16 h-14 ring-yellow-500 hover:ring-1 p-2 rounded-lg font-medium text-xl hover:bg-yellow-500 transition-colors"
+              onClick={() => setWinnerIndex(null)}
             >
               Close
+            </button>
+            <button
+              type="button"
+              className="bg-red-500 px-16 h-14 ring-red-600 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-red-600 transition-colors"
+              onClick={() => removeWheelOption(winnerIndex)}
+            >
+              Remove Winner
             </button>
           </div>
         </section>
