@@ -8,10 +8,19 @@ import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 import { WheelOptionModel } from "../model/WheelOptionModel";
 import { changeSoundVolume } from "../sounds";
 
-const storagedOptions = localStorage.getItem("savedOptions");
+const storageOptions = localStorage.getItem("savedOptions");
 let currentSavedWheelOptions: WheelOptionModel[] = [];
 
-if (storagedOptions) currentSavedWheelOptions = JSON.parse(storagedOptions);
+if (storageOptions) {
+  const parsedOptions = JSON.parse(storageOptions) as WheelOptionModel[];
+  parsedOptions.forEach((value) => {
+    if (value.active === undefined || value.active === null) {
+      value.active = true;
+    }
+    return value;
+  });
+  currentSavedWheelOptions = parsedOptions;
+}
 
 export function MainPage() {
   const [wheelOptions, setWheelOptions] = useState<WheelOptionModel[]>(

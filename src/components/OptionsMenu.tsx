@@ -27,14 +27,21 @@ export function OptionsMenu({
   }
 
   function handleUpdateOption(
-    percentage: number,
-    title: string,
-    index: number
+    index: number,
+    updateData: {
+      percentage?: number;
+      title?: string;
+      active?: boolean;
+    }
   ) {
-    wheelOptions[index].percentage = percentage;
-    wheelOptions[index].title = title;
+    const optionsToUpdate = [...wheelOptions];
+    if (updateData.percentage)
+      optionsToUpdate[index].percentage = updateData.percentage;
+    if (updateData.title) optionsToUpdate[index].title = updateData.title;
+    if (updateData.active !== undefined)
+      optionsToUpdate[index].active = updateData.active;
 
-    handleWheelOptions([...wheelOptions]);
+    handleWheelOptions(optionsToUpdate);
   }
 
   function handleRemoveOption(index: number) {

@@ -20,14 +20,14 @@ interface WheelOfFortuneProps {
 }
 
 const defaultOptions = [
-  { title: "Yes", percentage: 100 },
-  { title: "No", percentage: 100 },
-  { title: "Yes", percentage: 100 },
-  { title: "No", percentage: 100 },
-  { title: "Yes", percentage: 100 },
-  { title: "No", percentage: 100 },
-  { title: "Yes", percentage: 100 },
-  { title: "No", percentage: 100 }
+  { title: "Yes", percentage: 100, active: true },
+  { title: "No", percentage: 100, active: true },
+  { title: "Yes", percentage: 100, active: true },
+  { title: "No", percentage: 100, active: true },
+  { title: "Yes", percentage: 100, active: true },
+  { title: "No", percentage: 100, active: true },
+  { title: "Yes", percentage: 100, active: true },
+  { title: "No", percentage: 100, active: true }
 ];
 
 export function WheelOfFortune({
@@ -43,14 +43,23 @@ export function WheelOfFortune({
   const { wheelTick: wheelTickSound, spinningMusic: spinningSong } =
     useSoundEffects({ sounds: ["spinningMusic", "wheelTick"] });
 
+  const activeOptions = useMemo(() => {
+    const activeOptions = options.filter((o) => {
+      console.log(`Option: ${o.title}, ativa: ${o.active}`);
+      return o.active === true;
+    });
+    return activeOptions;
+  }, [options]);
+
   const optionsContext = useContext(WheelOptionsContext);
 
   const optionsChancesSum = useMemo(() => {
-    return options.reduce((prev, cur) => {
+    return activeOptions.reduce((prev, cur) => {
+      if (!cur.active) return prev;
       const sum = prev + cur.percentage;
       return sum;
     }, 0);
-  }, [options]);
+  }, [activeOptions]);
 
   function textColor(backgroundColor: string) {
     const red = parseInt(backgroundColor.slice(1, 3), 16);
@@ -169,7 +178,7 @@ export function WheelOfFortune({
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
       const radius = canvas.width / 2;
-      const optionsAmount = options.length;
+      const optionsAmount = activeOptions.length;
       const maxAngle = 2 * Math.PI;
       let startAngle = frame.current;
       const endAngle = maxAngle;
@@ -189,13 +198,14 @@ export function WheelOfFortune({
             framesToSum.current
           );
           const optionAngle =
-            (options[i].percentage / optionsChancesSum) * endAngle + startAngle;
+            (activeOptions[i].percentage / optionsChancesSum) * endAngle +
+            startAngle;
           ctx.beginPath();
           ctx.moveTo(centerX, centerY);
 
           ctx.fillStyle = colors[colorIndex];
           colorIndex = (colorIndex + 1) % colors.length;
-          if (i + 1 === options.length) {
+          if (i + 1 === activeOptions.length) {
             const [firstColor, secondColor] = colors;
             if (ctx.fillStyle === firstColor) {
               ctx.fillStyle = secondColor;
@@ -232,7 +242,7 @@ export function WheelOfFortune({
           }
 
           const [textAngle, textStart, adaptedFontSizeNumber] = adaptWheelTitle(
-            options[i].title,
+            activeOptions[i].title,
             startAngle,
             optionAngle,
             radius
@@ -242,7 +252,7 @@ export function WheelOfFortune({
           ctx.fillStyle = textColor(ctx.fillStyle);
           ctx.translate(centerX, centerY);
           ctx.rotate(textAngle);
-          ctx.fillText(options[i].title, textStart, 0);
+          ctx.fillText(activeOptions[i].title, textStart, 0);
           ctx.rotate(-textAngle);
           ctx.setTransform(1, 0, 0, 1, 0, 0);
           startAngle = optionAngle;
@@ -256,7 +266,7 @@ export function WheelOfFortune({
         }
       }
     }
-  }, [options, spin, framesToSum, colors]);
+  }, [activeOptions, spin, framesToSum, colors]);
 
   function stopWheelEarly() {
     earlyStop.current = true;
@@ -282,13 +292,13 @@ export function WheelOfFortune({
       wheelSlowDown();
     }
     drawWheel();
-  }, [options, spin, colors]);
+  }, [activeOptions, spin, colors]);
 
   useEffect(() => {
     if (spin) {
       stopWheelEarly();
     }
-  }, [options, colors]);
+  }, [activeOptions, colors]);
 
   useEffect(() => {
     addSpinButtonListener();
@@ -301,7 +311,7 @@ export function WheelOfFortune({
         <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="px-44 py-20 whitespace-nowrap flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900">
             <span className="h-3/4 flex items-center justify-center text-7xl text-white font-extrabold">
-              {options[winnerIndex].title}
+              {activeOptions[winnerIndex].title}
             </span>
           </div>
           <div className="flex items-center justify-center mt-5 gap-3">
