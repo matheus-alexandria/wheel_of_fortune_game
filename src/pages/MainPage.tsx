@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { OptionsMenu } from "../components/OptionsMenu";
 import { WheelOfFortune } from "../components/WheelOfFortune";
-import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
+import { WheelOptionsProvider } from "../contexts/WheelOptionsContext";
 import { WheelOptionModel } from "../model/WheelOptionModel";
 import { changeSoundVolume } from "../sounds";
 
@@ -77,7 +77,7 @@ export function MainPage() {
   }, [wheelOptions]);
 
   return (
-    <WheelOptionsContext.Provider value={{ wheelOptions, setWheelOptions }}>
+    <WheelOptionsProvider>
       <div className="w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-hidden">
         <button
           onClick={() => handleAudioVolume()}
@@ -110,6 +110,6 @@ export function MainPage() {
           handleWheelColors={handleWheelColors}
         />
       </div>
-    </WheelOptionsContext.Provider>
+    </WheelOptionsProvider>
   );
 }

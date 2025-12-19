@@ -43,15 +43,14 @@ export function WheelOfFortune({
   const { wheelTick: wheelTickSound, spinningMusic: spinningSong } =
     useSoundEffects({ sounds: ["spinningMusic", "wheelTick"] });
 
+  const optionsContext = useContext(WheelOptionsContext);
+
   const activeOptions = useMemo(() => {
     const activeOptions = options.filter((o) => {
-      console.log(`Option: ${o.title}, ativa: ${o.active}`);
       return o.active === true;
     });
     return activeOptions;
   }, [options]);
-
-  const optionsContext = useContext(WheelOptionsContext);
 
   const optionsChancesSum = useMemo(() => {
     return activeOptions.reduce((prev, cur) => {
