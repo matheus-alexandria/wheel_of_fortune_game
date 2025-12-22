@@ -1,29 +1,17 @@
 import { Eye, EyeClosed, X } from "phosphor-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
+import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 import { WheelOptionModel } from "../model/WheelOptionModel";
 
 interface WheelOptionProps {
   option: WheelOptionModel;
-  updateOption: (
-    index: number,
-    updateData: {
-      percentage?: number;
-      title?: string;
-      active?: boolean;
-    }
-  ) => void;
-  removeOption: (index: number) => void;
   index: number;
 }
 
-export function WheelOption({
-  option,
-  updateOption,
-  removeOption,
-  index
-}: WheelOptionProps) {
+export function WheelOption({ option, index }: WheelOptionProps) {
   const [isActive, setIsActive] = useState(true);
+  const optionsContext = useContext(WheelOptionsContext);
 
   return (
     <div
@@ -39,9 +27,13 @@ export function WheelOption({
           onChange={(e) => {
             const valueAsNumber = Number(e.target.value);
             if (!Number.isNaN(valueAsNumber)) {
-              updateOption(index, { percentage: valueAsNumber });
+              optionsContext.handleUpdateOption(index, {
+                percentage: valueAsNumber
+              });
             } else {
-              updateOption(index, { percentage: option.percentage });
+              optionsContext.handleUpdateOption(index, {
+                percentage: option.percentage
+              });
             }
           }}
           className="font-extrabold text-white w-12 bg-gray-900"
@@ -53,7 +45,7 @@ export function WheelOption({
           className="font-extrabold w-full text-white bg-gray-900"
           onChange={(e) => {
             const newTitle = e.target.value.toString();
-            updateOption(index, { title: newTitle });
+            optionsContext.handleUpdateOption(index, { title: newTitle });
           }}
         />
       </div>
@@ -61,7 +53,7 @@ export function WheelOption({
         <button
           onClick={() => {
             const newState = !isActive;
-            updateOption(index, { active: newState });
+            optionsContext.handleUpdateOption(index, { active: newState });
             setIsActive(newState);
           }}
         >
@@ -74,7 +66,7 @@ export function WheelOption({
         <button
           type="button"
           onClick={() => {
-            removeOption(index);
+            optionsContext.handleRemoveOption(index);
           }}
         >
           <X size={16} color="white" />

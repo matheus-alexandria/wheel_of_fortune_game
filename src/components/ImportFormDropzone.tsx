@@ -1,20 +1,17 @@
 import { FileArrowDown } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
+import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 import { useDetectClickOut } from "../hooks/useDetectClickOut";
 import { WheelOptionModel } from "../model/WheelOptionModel";
 import { api } from "../utils/api";
 
 interface ImportFormDropzoneProps {
-  handleWheelOptions: (options: WheelOptionModel[]) => void;
   isModalOpen: boolean;
 }
 
-export function ImportFormDropzone({
-  handleWheelOptions,
-  isModalOpen
-}: ImportFormDropzoneProps) {
+export function ImportFormDropzone({ isModalOpen }: ImportFormDropzoneProps) {
   const {
     triggerRef,
     nodeRef,
@@ -30,6 +27,7 @@ export function ImportFormDropzone({
     },
     maxFiles: 1
   });
+  const optionsContext = useContext(WheelOptionsContext);
 
   function handleSendCsvFile() {
     if (fileComponent) {
@@ -47,7 +45,7 @@ export function ImportFormDropzone({
         )
         .then((res) => res.data)
         .then((data: WheelOptionModel[]) => {
-          handleWheelOptions(data);
+          optionsContext.setWheelOptions(data);
           setFileComponent(undefined);
           setIsDropzoneOpen(false);
           setIsDropzoneDisabled(false);

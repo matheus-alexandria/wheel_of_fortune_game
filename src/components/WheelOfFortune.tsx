@@ -8,7 +8,6 @@ import {
 } from "react";
 
 import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
-import { WheelOptionModel } from "../model/WheelOptionModel";
 import { useSoundEffects } from "../sounds";
 import { adaptWheelTitle } from "../utils/adaptWheelTitle";
 import { tickSoundAngle } from "../utils/tickSoundAngle";
@@ -16,25 +15,9 @@ import { tickSoundAngle } from "../utils/tickSoundAngle";
 interface WheelOfFortuneProps {
   canvasSize: number;
   colors: string[];
-  options?: WheelOptionModel[];
 }
 
-const defaultOptions = [
-  { title: "Yes", percentage: 100, active: true },
-  { title: "No", percentage: 100, active: true },
-  { title: "Yes", percentage: 100, active: true },
-  { title: "No", percentage: 100, active: true },
-  { title: "Yes", percentage: 100, active: true },
-  { title: "No", percentage: 100, active: true },
-  { title: "Yes", percentage: 100, active: true },
-  { title: "No", percentage: 100, active: true }
-];
-
-export function WheelOfFortune({
-  canvasSize,
-  colors,
-  options = defaultOptions
-}: WheelOfFortuneProps) {
+export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [spin, setSpin] = useState(false);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
@@ -46,11 +29,11 @@ export function WheelOfFortune({
   const optionsContext = useContext(WheelOptionsContext);
 
   const activeOptions = useMemo(() => {
-    const activeOptions = options.filter((o) => {
+    const activeOptions = optionsContext.wheelOptions.filter((o) => {
       return o.active === true;
     });
     return activeOptions;
-  }, [options]);
+  }, [optionsContext.wheelOptions]);
 
   const optionsChancesSum = useMemo(() => {
     return activeOptions.reduce((prev, cur) => {

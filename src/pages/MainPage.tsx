@@ -1,38 +1,20 @@
 // import { Howl } from "howler";
 import { SpeakerHigh, SpeakerX } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { OptionsMenu } from "../components/OptionsMenu";
 import { WheelOfFortune } from "../components/WheelOfFortune";
-import { WheelOptionsProvider } from "../contexts/WheelOptionsContext";
-import { WheelOptionModel } from "../model/WheelOptionModel";
+import {
+  WheelOptionsContext,
+  WheelOptionsProvider
+} from "../contexts/WheelOptionsContext";
 import { changeSoundVolume } from "../sounds";
 
-const storageOptions = localStorage.getItem("savedOptions");
-let currentSavedWheelOptions: WheelOptionModel[] = [];
-
-if (storageOptions) {
-  const parsedOptions = JSON.parse(storageOptions) as WheelOptionModel[];
-  parsedOptions.forEach((value) => {
-    if (value.active === undefined || value.active === null) {
-      value.active = true;
-    }
-    return value;
-  });
-  currentSavedWheelOptions = parsedOptions;
-}
-
 export function MainPage() {
-  const [wheelOptions, setWheelOptions] = useState<WheelOptionModel[]>(
-    currentSavedWheelOptions
-  );
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(true);
   const [colors, setColors] = useState(["#000000", "#ffffff", "#808080"]);
   const [audioVolume, setAudioVolume] = useState(0.2);
-
-  function handleWheelOptions(options: WheelOptionModel[]) {
-    setWheelOptions([...options]);
-  }
+  const wheelOptionsContext = useContext(WheelOptionsContext);
 
   function handleOptionsModal(state: boolean) {
     setIsOptionsModalOpen(state);
@@ -72,44 +54,38 @@ export function MainPage() {
     }
   }
 
-  useEffect(() => {
-    localStorage.setItem("savedOptions", JSON.stringify(wheelOptions));
-  }, [wheelOptions]);
+  console.log(wheelOptionsContext?.wheelOptions);
 
   return (
     <WheelOptionsProvider>
-      <div className="w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-hidden">
-        <button
-          onClick={() => handleAudioVolume()}
-          className="fixed p-1 rounded-full bg-gray-500 bottom-10 left-[5%] hover:bg-gray-600 transition-colors"
-        >
-          {audioVolume > 0 ? (
-            <SpeakerHigh size={32} className="text-white" />
-          ) : (
-            <SpeakerX size={32} className="text-white" />
-          )}
-        </button>
-        <div
-          className={`flex w-1/2 flex-col items-center justify-center gap-2 mr-4 transition-all duration-300 ${
-            isOptionsModalOpen ? "translate-x-0" : "translate-x-1/4"
-          }`}
-        >
-          <WheelOfFortune
-            canvasSize={700}
-            colors={colors}
-            options={wheelOptions.length > 0 ? wheelOptions : undefined}
+      {wheelOptionsContext?.wheelOptions && (
+        <div className="w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-hidden">
+          <button
+            onClick={() => handleAudioVolume()}
+            className="fixed p-1 rounded-full bg-gray-500 bottom-10 left-[5%] hover:bg-gray-600 transition-colors"
+          >
+            {audioVolume > 0 ? (
+              <SpeakerHigh size={32} className="text-white" />
+            ) : (
+              <SpeakerX size={32} className="text-white" />
+            )}
+          </button>
+          <div
+            className={`flex w-1/2 flex-col items-center justify-center gap-2 mr-4 transition-all duration-300 ${
+              isOptionsModalOpen ? "translate-x-0" : "translate-x-1/4"
+            }`}
+          >
+            <WheelOfFortune canvasSize={700} colors={colors} />
+          </div>
+
+          <OptionsMenu
+            isModalOpen={isOptionsModalOpen}
+            wheelColors={colors}
+            handleOptionsModal={handleOptionsModal}
+            handleWheelColors={handleWheelColors}
           />
         </div>
-
-        <OptionsMenu
-          wheelOptions={wheelOptions}
-          isModalOpen={isOptionsModalOpen}
-          wheelColors={colors}
-          handleWheelOptions={handleWheelOptions}
-          handleOptionsModal={handleOptionsModal}
-          handleWheelColors={handleWheelColors}
-        />
-      </div>
+      )}
     </WheelOptionsProvider>
   );
 }

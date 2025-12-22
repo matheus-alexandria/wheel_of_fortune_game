@@ -1,6 +1,7 @@
-import { DotsThree, Eye, FloppyDisk, Shuffle } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { Eye, FloppyDisk, Shuffle } from "phosphor-react";
+import { useContext, useEffect, useState } from "react";
 
+import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 import { WheelOptionModel } from "../model/WheelOptionModel";
 import { api } from "../utils/api";
 import { ColorPicker } from "./ColorPicker";
@@ -9,28 +10,25 @@ import { ImportFormDropzone } from "./ImportFormDropzone";
 
 interface OptionsHeaderProps {
   isModalOpen: boolean;
-  wheelOptions: WheelOptionModel[];
   wheelColors: string[];
-  handleWheelOptions: (options: WheelOptionModel[]) => void;
   handleOptionsModal: (state: boolean) => void;
   handleWheelColors: (colors: string[]) => void;
 }
 
 export function OptionsHeader({
   isModalOpen,
-  wheelOptions,
   wheelColors,
-  handleWheelOptions,
   handleOptionsModal,
   handleWheelColors
 }: OptionsHeaderProps) {
   const [isServerOnline, setIsServerOnline] = useState(true);
+  const optionsContext = useContext(WheelOptionsContext);
 
   function handleOptionsSaveFile() {
     const now = new Date();
     const saveOptionsData = {
       name: now.getTime(),
-      options: wheelOptions
+      options: optionsContext?.wheelOptions
     };
     api
       .post("/export", saveOptionsData, { responseType: "blob" })
@@ -47,16 +45,17 @@ export function OptionsHeader({
   }
 
   function handleShuffleOptions() {
-    const rearrengedOptions = wheelOptions;
-    for (let i = rearrengedOptions.length - 1; i > 0; i -= 1) {
+    if (!optionsContext) return;
+    const rearrangedOptions = optionsContext.wheelOptions;
+    for (let i = rearrangedOptions.length - 1; i > 0; i -= 1) {
       const toChange = Math.floor(Math.random() * (i + 1));
-      [rearrengedOptions[i], rearrengedOptions[toChange]] = [
-        rearrengedOptions[toChange],
-        rearrengedOptions[i]
+      [rearrangedOptions[i], rearrangedOptions[toChange]] = [
+        rearrangedOptions[toChange],
+        rearrangedOptions[i]
       ];
     }
 
-    handleWheelOptions(rearrengedOptions);
+    optionsContext.setWheelOptions(rearrangedOptions);
   }
 
   useEffect(() => {
@@ -87,28 +86,24 @@ export function OptionsHeader({
         />
         {isServerOnline && (
           <>
-            <ImportFormDropzone
-              handleWheelOptions={handleWheelOptions}
-              isModalOpen={isModalOpen}
-            />
+            <ImportFormDropzone isModalOpen={isModalOpen} />
             <button
-              disabled={!wheelOptions.length}
+              disabled={!optionsContext.wheelOptions.length}
               onClick={() => handleOptionsSaveFile()}
             >
               <FloppyDisk
                 size={20}
                 weight="bold"
                 className={`text-white ${
-                  wheelOptions.length ? "opacity-100" : "opacity-30"
+                  optionsContext.wheelOptions.length
+                    ? "opacity-100"
+                    : "opacity-30"
                 }`}
               />
             </button>
           </>
         )}
-        <DeleteAllOptions
-          wheelOptions={wheelOptions}
-          handleWheelOptions={handleWheelOptions}
-        />
+        <DeleteAllOptions />
       </div>
     </header>
   );

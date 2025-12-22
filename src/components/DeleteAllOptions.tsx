@@ -1,30 +1,25 @@
 import { Trash } from "phosphor-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-import { WheelOptionModel } from "../model/WheelOptionModel";
+import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 
-interface DeleteAllOptionsProps {
-  wheelOptions: WheelOptionModel[];
-  handleWheelOptions: (options: WheelOptionModel[]) => void;
-}
-
-export function DeleteAllOptions({
-  wheelOptions,
-  handleWheelOptions
-}: DeleteAllOptionsProps) {
+export function DeleteAllOptions() {
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState(false);
+
+  const optionsContext = useContext(WheelOptionsContext);
+
   return (
     <>
       <button
-        disabled={!wheelOptions.length}
+        disabled={!optionsContext.wheelOptions.length}
         onClick={() => setIsDeleteConfirmationOpen(true)}
       >
         <Trash
           size={20}
           weight="bold"
           className={`text-white ${
-            wheelOptions.length ? "opacity-100" : "opacity-30"
+            optionsContext.wheelOptions.length ? "opacity-100" : "opacity-30"
           }`}
         />
       </button>
@@ -42,7 +37,7 @@ export function DeleteAllOptions({
             </button>
             <button
               onClick={() => {
-                handleWheelOptions([]);
+                optionsContext.setWheelOptions([]);
                 setIsDeleteConfirmationOpen(false);
               }}
               className="px-4 bg-red-500 text-white text-lg rounded-md mt-6 hover:bg-red-700 transition-colors"
