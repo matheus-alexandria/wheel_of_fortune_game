@@ -15,6 +15,7 @@ type WheelContext = {
     }
   ) => void;
   handleRemoveOption: (index: number) => void;
+  handleHideOption: (index: number) => void;
 };
 
 const initialContextValue = {
@@ -31,7 +32,8 @@ const initialContextValue = {
   setWheelOptions: () => 0,
   handleNewOption: () => 0,
   handleUpdateOption: () => 0,
-  handleRemoveOption: () => 0
+  handleRemoveOption: () => 0,
+  handleHideOption: () => 0
 };
 
 export const WheelOptionsContext =
@@ -87,6 +89,14 @@ export function WheelOptionsProvider({
     setWheelOptions(updatedOptions);
   }
 
+  function handleHideOption(index: number) {
+    const optionsCopyToUpdate = [...wheelOptions];
+    if (optionsCopyToUpdate[index]?.active === true) {
+      optionsCopyToUpdate[index].active = false;
+    }
+    setWheelOptions(optionsCopyToUpdate);
+  }
+
   useEffect(() => {
     localStorage.setItem("savedOptions", JSON.stringify(wheelOptions));
   }, [wheelOptions]);
@@ -98,7 +108,8 @@ export function WheelOptionsProvider({
         setWheelOptions,
         handleNewOption,
         handleUpdateOption,
-        handleRemoveOption
+        handleRemoveOption,
+        handleHideOption
       }}
     >
       {children}

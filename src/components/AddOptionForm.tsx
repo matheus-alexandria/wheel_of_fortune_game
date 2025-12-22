@@ -14,7 +14,7 @@ export function AddOptionForm({ saveOption }: AddOptionForm) {
   function handleAddOption(event: FormEvent) {
     event.preventDefault();
 
-    const newOption = { title: option, percentage };
+    const newOption = { title: option, percentage, active: true };
     if (option && percentage > 0) {
       saveOption(newOption);
     }

@@ -1,5 +1,5 @@
 import { Eye, EyeClosed, X } from "phosphor-react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
 import { WheelOptionModel } from "../model/WheelOptionModel";
@@ -10,13 +10,12 @@ interface WheelOptionProps {
 }
 
 export function WheelOption({ option, index }: WheelOptionProps) {
-  const [isActive, setIsActive] = useState(true);
   const optionsContext = useContext(WheelOptionsContext);
 
   return (
     <div
       className={`w-[98%] min-h-[37px] flex justify-between items-center p-2 bg-gray-900 rounded-md ${
-        isActive ? "opacity-100" : "opacity-50"
+        option.active ? "opacity-100" : "opacity-50"
       }`}
     >
       <div className="flex items-center">
@@ -52,12 +51,11 @@ export function WheelOption({ option, index }: WheelOptionProps) {
       <div className="flex gap-2">
         <button
           onClick={() => {
-            const newState = !isActive;
+            const newState = !option.active;
             optionsContext.handleUpdateOption(index, { active: newState });
-            setIsActive(newState);
           }}
         >
-          {isActive ? (
+          {option.active ? (
             <Eye color="white" size={19} />
           ) : (
             <EyeClosed color="white" size={19} />

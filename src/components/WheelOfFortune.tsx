@@ -26,14 +26,15 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
   const { wheelTick: wheelTickSound, spinningMusic: spinningSong } =
     useSoundEffects({ sounds: ["spinningMusic", "wheelTick"] });
 
-  const optionsContext = useContext(WheelOptionsContext);
+  const { wheelOptions, handleRemoveOption, handleHideOption } =
+    useContext(WheelOptionsContext);
 
   const activeOptions = useMemo(() => {
-    const activeOptions = optionsContext.wheelOptions.filter((o) => {
+    const activeOptions = wheelOptions.filter((o) => {
       return o.active === true;
     });
     return activeOptions;
-  }, [optionsContext.wheelOptions]);
+  }, [wheelOptions]);
 
   const optionsChancesSum = useMemo(() => {
     return activeOptions.reduce((prev, cur) => {
@@ -259,15 +260,6 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
     });
   }
 
-  const removeWheelOption = (index: number) => {
-    if (!optionsContext) return;
-    const downsizedOptions = optionsContext.wheelOptions.filter(
-      (_, i) => i !== index
-    );
-    optionsContext.setWheelOptions(downsizedOptions);
-    setWinnerIndex(null);
-  };
-
   useEffect(() => {
     if (spin) {
       earlyStop.current = false;
@@ -306,8 +298,21 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
             </button>
             <button
               type="button"
+              className="bg-purple-300 px-16 h-14 ring-purple-400 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-purple-400 transition-colors"
+              onClick={() => {
+                handleHideOption(winnerIndex);
+                setWinnerIndex(null);
+              }}
+            >
+              Hide Winner
+            </button>
+            <button
+              type="button"
               className="bg-red-500 px-16 h-14 ring-red-600 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-red-600 transition-colors"
-              onClick={() => removeWheelOption(winnerIndex)}
+              onClick={() => {
+                handleRemoveOption(winnerIndex);
+                setWinnerIndex(null);
+              }}
             >
               Remove Winner
             </button>
