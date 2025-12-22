@@ -51,7 +51,11 @@ if (storageOptions) {
   currentSavedWheelOptions = parsedOptions;
 }
 
-export function WheelOptionsProvider({ children }): JSX.Element {
+export function WheelOptionsProvider({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   const [wheelOptions, setWheelOptions] = useState(currentSavedWheelOptions);
 
   function handleNewOption(option: WheelOptionModel) {

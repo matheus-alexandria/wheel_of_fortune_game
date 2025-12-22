@@ -2,7 +2,6 @@ import { Eye, FloppyDisk, Shuffle } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 
 import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
-import { WheelOptionModel } from "../model/WheelOptionModel";
 import { api } from "../utils/api";
 import { ColorPicker } from "./ColorPicker";
 import { DeleteAllOptions } from "./DeleteAllOptions";

@@ -54,8 +54,6 @@ export function MainPage() {
     }
   }
 
-  console.log(wheelOptionsContext?.wheelOptions);
-
   return (
     <WheelOptionsProvider>
       {wheelOptionsContext?.wheelOptions && (
