@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { v4 as uuidV4 } from "uuid";
 
 import { WheelOptionModel } from "../model/WheelOptionModel";
 
@@ -20,14 +21,14 @@ type WheelContext = {
 
 const initialContextValue = {
   wheelOptions: [
-    { title: "Yes", percentage: 100, active: true },
-    { title: "No", percentage: 100, active: true },
-    { title: "Yes", percentage: 100, active: true },
-    { title: "No", percentage: 100, active: true },
-    { title: "Yes", percentage: 100, active: true },
-    { title: "No", percentage: 100, active: true },
-    { title: "Yes", percentage: 100, active: true },
-    { title: "No", percentage: 100, active: true }
+    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "No", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "No", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "No", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { uuid: uuidV4(), title: "No", percentage: 100, active: true }
   ],
   setWheelOptions: () => 0,
   handleNewOption: () => 0,
@@ -90,6 +91,7 @@ export function WheelOptionsProvider({
   }
 
   function handleHideOption(index: number) {
+    if (wheelOptions.filter((o) => o.active === true).length === 1) return;
     const optionsCopyToUpdate = [...wheelOptions];
     if (optionsCopyToUpdate[index]?.active === true) {
       optionsCopyToUpdate[index].active = false;
