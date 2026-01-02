@@ -1,5 +1,6 @@
 import { Plus } from "phosphor-react";
 import { FormEvent, useState } from "react";
+import { v4 as uuidV4 } from "uuid";
 
 import { WheelOptionModel } from "../model/WheelOptionModel";
 
@@ -14,7 +15,7 @@ export function AddOptionForm({ saveOption }: AddOptionForm) {
   function handleAddOption(event: FormEvent) {
     event.preventDefault();
 
-    const newOption = { title: option, percentage, active: true };
+    const newOption = { title: option, percentage, active: true, id: uuidV4() };
     if (option && percentage > 0) {
       saveOption(newOption);
     }

@@ -218,7 +218,10 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
               finalArcEnd > (3 / 4) * endAngle
             ) {
               if (!earlyStop.current) {
-                setWinnerIndex(i);
+                const realWinnerIndex = wheelOptions.findIndex(
+                  (wo) => wo.id === activeOptions[i].id
+                );
+                setWinnerIndex(realWinnerIndex);
               }
               setSpin(false);
             }
@@ -285,7 +288,7 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
         <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="px-44 py-20 whitespace-nowrap flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900">
             <span className="h-3/4 flex items-center justify-center text-7xl text-white font-extrabold">
-              {activeOptions[winnerIndex].title}
+              {wheelOptions[winnerIndex].title}
             </span>
           </div>
           <div className="flex items-center justify-center mt-5 gap-3">

@@ -1,5 +1,5 @@
 export interface WheelOptionModel {
-  uuid: string;
+  id: string;
   title: string;
   percentage: number;
   active: boolean;

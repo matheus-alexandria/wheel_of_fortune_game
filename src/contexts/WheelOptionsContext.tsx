@@ -21,14 +21,14 @@ type WheelContext = {
 
 const initialContextValue = {
   wheelOptions: [
-    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "No", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "No", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "No", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { uuid: uuidV4(), title: "No", percentage: 100, active: true }
+    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { id: uuidV4(), title: "No", percentage: 100, active: true },
+    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { id: uuidV4(), title: "No", percentage: 100, active: true },
+    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { id: uuidV4(), title: "No", percentage: 100, active: true },
+    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+    { id: uuidV4(), title: "No", percentage: 100, active: true }
   ],
   setWheelOptions: () => 0,
   handleNewOption: () => 0,
