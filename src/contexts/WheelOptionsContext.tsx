@@ -49,6 +49,9 @@ if (storageOptions) {
     if (value.active === undefined || value.active === null) {
       value.active = true;
     }
+    if (value.id === undefined || value.id === null) {
+      value.id = uuidV4();
+    }
     return value;
   });
   currentSavedWheelOptions = parsedOptions;
