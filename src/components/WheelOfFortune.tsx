@@ -17,6 +17,20 @@ interface WheelOfFortuneProps {
   colors: string[];
 }
 
+function textColor(backgroundColor: string) {
+  const red = parseInt(backgroundColor.slice(1, 3), 16);
+  const green = parseInt(backgroundColor.slice(3, 5), 16);
+  const blue = parseInt(backgroundColor.slice(5, 7), 16);
+
+  const brightness = (red * 299 + green * 587 + blue * 114) / 1000;
+
+  if (brightness > 128) {
+    return "#000000";
+  }
+
+  return "#ffffff";
+}
+
 export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [spin, setSpin] = useState(false);
@@ -43,20 +57,6 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
       return sum;
     }, 0);
   }, [activeOptions]);
-
-  function textColor(backgroundColor: string) {
-    const red = parseInt(backgroundColor.slice(1, 3), 16);
-    const green = parseInt(backgroundColor.slice(3, 5), 16);
-    const blue = parseInt(backgroundColor.slice(5, 7), 16);
-
-    const brightness = (red * 299 + green * 587 + blue * 114) / 1000;
-
-    if (brightness > 128) {
-      return "#000000";
-    }
-
-    return "#ffffff";
-  }
 
   const frame = useRef(0);
   const framesToSum = useRef(0.4);
