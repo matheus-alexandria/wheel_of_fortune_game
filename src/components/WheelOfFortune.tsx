@@ -7,7 +7,10 @@ import {
   useState
 } from "react";
 
-import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
+import {
+  defaultOptions,
+  WheelOptionsContext
+} from "../contexts/WheelOptionsContext";
 import { useSoundEffects } from "../sounds";
 import { adaptWheelTitle } from "../utils/adaptWheelTitle";
 import { tickSoundAngle } from "../utils/tickSoundAngle";
@@ -47,8 +50,13 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
     const activeOptions = wheelOptions.filter((o) => {
       return o.active === true;
     });
+    if (activeOptions.length <= 0) {
+      return defaultOptions;
+    }
     return activeOptions;
   }, [wheelOptions]);
+
+  const isDefaultOptions = !wheelOptions.some((wo) => wo.active === true);
 
   const optionsChancesSum = useMemo(() => {
     return activeOptions.reduce((prev, cur) => {
@@ -218,9 +226,11 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
               finalArcEnd > (3 / 4) * endAngle
             ) {
               if (!earlyStop.current) {
-                const realWinnerIndex = wheelOptions.findIndex(
+                let realWinnerIndex = wheelOptions.findIndex(
                   (wo) => wo.id === activeOptions[i].id
                 );
+                if (isDefaultOptions) realWinnerIndex = i;
+
                 setWinnerIndex(realWinnerIndex);
               }
               setSpin(false);
@@ -288,7 +298,9 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
         <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="px-44 py-20 whitespace-nowrap flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900">
             <span className="h-3/4 flex items-center justify-center text-7xl text-white font-extrabold">
-              {wheelOptions[winnerIndex].title}
+              {isDefaultOptions
+                ? defaultOptions[winnerIndex]?.title
+                : wheelOptions[winnerIndex]?.title}
             </span>
           </div>
           <div className="flex items-center justify-center mt-5 gap-3">
@@ -299,26 +311,30 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
             >
               Close
             </button>
-            <button
-              type="button"
-              className="bg-purple-300 px-16 h-14 ring-purple-400 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-purple-400 transition-colors"
-              onClick={() => {
-                handleHideOption(winnerIndex);
-                setWinnerIndex(null);
-              }}
-            >
-              Hide Winner
-            </button>
-            <button
-              type="button"
-              className="bg-red-500 px-16 h-14 ring-red-600 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-red-600 transition-colors"
-              onClick={() => {
-                handleRemoveOption(winnerIndex);
-                setWinnerIndex(null);
-              }}
-            >
-              Remove Winner
-            </button>
+            {!isDefaultOptions && (
+              <>
+                <button
+                  type="button"
+                  className="bg-purple-300 px-16 h-14 ring-purple-400 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-purple-400 transition-colors"
+                  onClick={() => {
+                    handleHideOption(winnerIndex);
+                    setWinnerIndex(null);
+                  }}
+                >
+                  Hide Winner
+                </button>
+                <button
+                  type="button"
+                  className="bg-red-500 px-16 h-14 ring-red-600 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-red-600 transition-colors"
+                  onClick={() => {
+                    handleRemoveOption(winnerIndex);
+                    setWinnerIndex(null);
+                  }}
+                >
+                  Remove Winner
+                </button>
+              </>
+            )}
           </div>
         </section>
       )}

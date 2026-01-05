@@ -19,17 +19,19 @@ type WheelContext = {
   handleHideOption: (index: number) => void;
 };
 
-const initialContextValue = {
-  wheelOptions: [
-    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { id: uuidV4(), title: "No", percentage: 100, active: true },
-    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { id: uuidV4(), title: "No", percentage: 100, active: true },
-    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { id: uuidV4(), title: "No", percentage: 100, active: true },
-    { id: uuidV4(), title: "Yes", percentage: 100, active: true },
-    { id: uuidV4(), title: "No", percentage: 100, active: true }
-  ],
+export const defaultOptions = [
+  { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+  { id: uuidV4(), title: "No", percentage: 100, active: true },
+  { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+  { id: uuidV4(), title: "No", percentage: 100, active: true },
+  { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+  { id: uuidV4(), title: "No", percentage: 100, active: true },
+  { id: uuidV4(), title: "Yes", percentage: 100, active: true },
+  { id: uuidV4(), title: "No", percentage: 100, active: true }
+];
+
+export const initialContextValue = {
+  wheelOptions: defaultOptions,
   setWheelOptions: () => 0,
   handleNewOption: () => 0,
   handleUpdateOption: () => 0,
