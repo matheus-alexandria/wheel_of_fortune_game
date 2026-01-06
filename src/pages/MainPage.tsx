@@ -24,25 +24,25 @@ export function MainPage() {
     setColors([...colors]);
   }
 
-  function adaptScreen() {
-    if (window.innerWidth < 1250) {
-      setIsOptionsModalOpen(false);
-    }
-  }
+  // function adaptScreen() {
+  //   if (window.innerWidth < 1250) {
+  //     setIsOptionsModalOpen(false);
+  //   }
+  // }
 
-  useEffect(() => {
-    const storageColors = localStorage.getItem("savedWheelColors");
-    if (storageColors) {
-      const cs = JSON.parse(storageColors);
-      setColors(cs);
-    }
+  // useEffect(() => {
+  //   const storageColors = localStorage.getItem("savedWheelColors");
+  //   if (storageColors) {
+  //     const cs = JSON.parse(storageColors);
+  //     setColors(cs);
+  //   }
 
-    window.addEventListener("resize", adaptScreen);
+  //   window.addEventListener("resize", adaptScreen);
 
-    return () => {
-      window.removeEventListener("resize", adaptScreen);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", adaptScreen);
+  //   };
+  // }, []);
 
   function handleAudioVolume() {
     if (audioVolume > 0) {
@@ -57,7 +57,7 @@ export function MainPage() {
   return (
     <WheelOptionsProvider>
       {wheelOptionsContext?.wheelOptions && (
-        <div className="w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-hidden">
+        <div className="w-screen h-screen flex max-xl:flex-col items-center justify-center bg-zinc-700 overflow-x-hidden">
           <button
             onClick={() => handleAudioVolume()}
             className="fixed p-1 rounded-full bg-gray-500 bottom-10 left-[5%] hover:bg-gray-600 transition-colors"
