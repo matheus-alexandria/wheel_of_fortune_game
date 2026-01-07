@@ -1,6 +1,6 @@
 // import { Howl } from "howler";
 import { SpeakerHigh, SpeakerX } from "phosphor-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import { OptionsMenu } from "../components/OptionsMenu";
 import { WheelOfFortune } from "../components/WheelOfFortune";
@@ -57,7 +57,12 @@ export function MainPage() {
   return (
     <WheelOptionsProvider>
       {wheelOptionsContext?.wheelOptions && (
-        <div className="w-screen h-screen flex max-xl:flex-col items-center justify-center bg-zinc-700 overflow-x-hidden">
+        <div
+          className={`
+            w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-x-hidden
+            max-xl:flex-col
+          `}
+        >
           <button
             onClick={() => handleAudioVolume()}
             className="fixed p-1 rounded-full bg-gray-500 bottom-10 left-[5%] hover:bg-gray-600 transition-colors"

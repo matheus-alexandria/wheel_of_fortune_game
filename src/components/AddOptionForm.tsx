@@ -25,7 +25,7 @@ export function AddOptionForm({ saveOption }: AddOptionForm) {
 
   return (
     <form
-      className="flex flex-col items-center mt-2 mb-4 justify-center gap-3"
+      className="flex flex-col h-10 items-center mt-2 mb-4 justify-center gap-3"
       onSubmit={(event) => {
         handleAddOption(event);
       }}
