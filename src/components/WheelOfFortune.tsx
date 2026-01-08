@@ -295,9 +295,19 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
     <>
       <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
       {winnerIndex !== null && (
-        <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="px-44 py-20 whitespace-nowrap flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900">
-            <span className="h-3/4 flex items-center justify-center text-7xl text-white font-extrabold">
+        <section className="fixed">
+          <div
+            className={`
+              px-44 py-20 flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900
+              max-xl:px-0 max-xl:py-6
+            `}
+          >
+            <span
+              className={`
+                h-3/4 flex items-center justify-center text-7xl text-white font-extrabold
+                max-xl:w-1/2 max-xl:text-4xl
+              `}
+            >
               {isDefaultOptions
                 ? defaultOptions[winnerIndex]?.title
                 : wheelOptions[winnerIndex]?.title}

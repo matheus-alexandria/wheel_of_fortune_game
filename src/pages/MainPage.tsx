@@ -60,7 +60,7 @@ export function MainPage() {
         <div
           className={`
             w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-x-hidden
-            max-xl:flex-col
+            max-xl:flex-col max-xl:h-full max-xl:py-14
           `}
         >
           <button
@@ -78,7 +78,7 @@ export function MainPage() {
               isOptionsModalOpen ? "translate-x-0" : "translate-x-1/4"
             }`}
           >
-            <WheelOfFortune canvasSize={700} colors={colors} />
+            <WheelOfFortune canvasSize={300} colors={colors} />
           </div>
 
           <OptionsMenu
