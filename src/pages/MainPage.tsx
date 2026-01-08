@@ -54,6 +54,8 @@ export function MainPage() {
     }
   }
 
+  const canvasSize = window.innerWidth <= 700 ? window.innerWidth - 50 : 700;
+
   return (
     <WheelOptionsProvider>
       {wheelOptionsContext?.wheelOptions && (
@@ -78,7 +80,7 @@ export function MainPage() {
               isOptionsModalOpen ? "translate-x-0" : "translate-x-1/4"
             }`}
           >
-            <WheelOfFortune canvasSize={300} colors={colors} />
+            <WheelOfFortune canvasSize={canvasSize} colors={colors} />
           </div>
 
           <OptionsMenu
