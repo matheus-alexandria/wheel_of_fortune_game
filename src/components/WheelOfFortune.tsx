@@ -305,7 +305,7 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
             <span
               className={`
                 h-3/4 flex items-center justify-center text-7xl text-white font-extrabold
-                max-xl:w-1/2 max-xl:text-4xl
+                max-xl:text-4xl
               `}
             >
               {isDefaultOptions
@@ -313,7 +313,12 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
                 : wheelOptions[winnerIndex]?.title}
             </span>
           </div>
-          <div className="flex items-center justify-center mt-5 gap-3">
+          <div
+            className={`
+              flex items-center justify-center mt-5 gap-3
+              max-xl:flex-col
+            `}
+          >
             <button
               type="button"
               className="bg-yellow-400 px-16 h-14 ring-yellow-500 hover:ring-1 p-2 rounded-lg font-medium text-xl hover:bg-yellow-500 transition-colors"
