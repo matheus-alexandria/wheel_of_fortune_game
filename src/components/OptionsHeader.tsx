@@ -66,15 +66,17 @@ export function OptionsHeader({
       });
   }, []);
 
+  const iconsSize = window.innerWidth > 1280 ? 20 : 16;
+
   return (
-    <header className="w-full flex justify-between items-start">
-      <b className="text-white text-xl">Options</b>
-      <div className="flex gap-4">
+    <header className="w-full flex justify-between items-center">
+      <b className="text-white text-xl max-xl:text-[16px]">Options</b>
+      <div className="flex gap-4 max-xl:gap-2">
         <button onClick={() => handleOptionsModal(false)}>
-          <Eye size={20} weight="bold" className="text-white" />
+          <Eye size={iconsSize} weight="bold" className="text-white" />
         </button>
         <button onClick={() => handleShuffleOptions()}>
-          <Shuffle size={20} weight="bold" className="text-white" />
+          <Shuffle size={iconsSize} weight="bold" className="text-white" />
         </button>
         {/* <button>
           <DotsThree className="text-white" size={26} weight="bold" />
@@ -91,7 +93,7 @@ export function OptionsHeader({
               onClick={() => handleOptionsSaveFile()}
             >
               <FloppyDisk
-                size={20}
+                size={iconsSize}
                 weight="bold"
                 className={`text-white ${
                   optionsContext.wheelOptions.length

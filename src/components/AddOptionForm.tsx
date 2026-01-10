@@ -23,9 +23,11 @@ export function AddOptionForm({ saveOption }: AddOptionForm) {
     setOption("");
   }
 
+  const iconsSize = window.innerWidth > 1280 ? 20 : 16;
+
   return (
     <form
-      className="flex h-10 items-center mt-2 mb-4 justify-center"
+      className="flex h-10 items-center mt-2 mb-4 justify-center max-xl:text-[15px]"
       onSubmit={(event) => {
         handleAddOption(event);
       }}
@@ -42,7 +44,7 @@ export function AddOptionForm({ saveOption }: AddOptionForm) {
             setPercentage((prev) => prev);
           }
         }}
-        className="w-12 p-2 mr-[2px] rounded-l-md"
+        className="w-12 h-full p-2 mr-[2px] rounded-l-md"
       />
       <input
         type={"text"}
@@ -55,7 +57,7 @@ export function AddOptionForm({ saveOption }: AddOptionForm) {
         type="submit"
         className="px-2 h-full bg-zinc-400 text-white rounded-r-md hover:bg-zinc-500 transition-colors"
       >
-        <Plus size={20} weight="bold" />
+        <Plus size={iconsSize} weight="bold" />
       </button>
     </form>
   );

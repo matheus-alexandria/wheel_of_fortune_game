@@ -9,6 +9,8 @@ export function DeleteAllOptions() {
 
   const optionsContext = useContext(WheelOptionsContext);
 
+  const iconsSize = window.innerWidth > 1280 ? 20 : 16;
+
   return (
     <>
       <button
@@ -16,7 +18,7 @@ export function DeleteAllOptions() {
         onClick={() => setIsDeleteConfirmationOpen(true)}
       >
         <Trash
-          size={20}
+          size={iconsSize}
           weight="bold"
           className={`text-white ${
             optionsContext.wheelOptions.length ? "opacity-100" : "opacity-30"

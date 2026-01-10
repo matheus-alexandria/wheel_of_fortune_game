@@ -19,10 +19,12 @@ export function ColorPicker({
     setShow
   } = useDetectClickOut(false);
 
+  const iconsSize = window.innerWidth > 1280 ? 20 : 16;
+
   return (
     <>
       <button ref={triggerRef}>
-        <PaintBrush size={20} weight="bold" className="text-white" />
+        <PaintBrush size={iconsSize} weight="bold" className="text-white" />
       </button>
       {isColorMenuOpen && (
         <ColorPickerMenu
