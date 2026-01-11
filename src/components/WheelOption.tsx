@@ -12,6 +12,8 @@ interface WheelOptionProps {
 export function WheelOption({ option, index }: WheelOptionProps) {
   const optionsContext = useContext(WheelOptionsContext);
 
+  const iconsSize = window.innerWidth > 1280 ? 19 : 15;
+
   return (
     <div
       className={`w-[98%] min-h-[37px] flex justify-between items-center p-2 bg-gray-900 rounded-md ${
@@ -56,9 +58,9 @@ export function WheelOption({ option, index }: WheelOptionProps) {
           }}
         >
           {option.active ? (
-            <Eye color="white" size={19} />
+            <Eye color="white" size={iconsSize} />
           ) : (
-            <EyeClosed color="white" size={19} />
+            <EyeClosed color="white" size={iconsSize} />
           )}
         </button>
         <button
@@ -67,7 +69,7 @@ export function WheelOption({ option, index }: WheelOptionProps) {
             optionsContext.handleRemoveOption(index);
           }}
         >
-          <X size={16} color="white" />
+          <X size={iconsSize} color="white" />
         </button>
       </div>
     </div>

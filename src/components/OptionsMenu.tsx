@@ -38,7 +38,7 @@ export function OptionsMenu({
         />
 
         <AddOptionForm saveOption={optionsContext.handleNewOption} />
-        <div className="w-full flex flex-col items-start gap-2 overflow-y-auto">
+        <div className="w-full flex flex-col items-start gap-2 overflow-y-auto max-xl:text-[15px]">
           {optionsContext.wheelOptions.map((option, index) => (
             <WheelOption
               key={`option-${index}`}
