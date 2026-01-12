@@ -27,7 +27,7 @@ export function OptionsMenu({
         className={`
             flex h-[600px] flex-col justify-start items-center p-5 bg-zinc-600 border-white border-[3px] rounded-md transition-all duration-300 ease-out 
             ${isModalOpen ? "opacity-100" : "translate-x-full opacity-0"}
-            max-xl:mt-10 max-xl:w-[85%]
+            max-xl:mt-10 max-xl:w-[80%] max-xl:h-[350px]
           `}
       >
         <OptionsHeader
