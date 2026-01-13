@@ -299,7 +299,7 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
           <div
             className={`
               px-44 py-20 flex flex-col items-center justify-center rounded-lg bg-gray-800 shadow-lg shadow-gray-900
-              max-xl:px-0 max-xl:py-6
+              max-xl:px-0 max-xl:py-6 max-xl:min-w-[250px] max-xl:max-w-[300px]
             `}
           >
             <span
@@ -316,12 +316,15 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
           <div
             className={`
               flex items-center justify-center mt-5 gap-3
-              max-xl:flex-col
+              max-xl:flex-col max-xl:gap-2
             `}
           >
             <button
               type="button"
-              className="bg-yellow-400 px-16 h-14 ring-yellow-500 hover:ring-1 p-2 rounded-lg font-medium text-xl hover:bg-yellow-500 transition-colors"
+              className={`
+                bg-yellow-400 px-16 h-14 ring-yellow-500 hover:ring-1 p-2 rounded-lg font-medium text-xl hover:bg-yellow-500 transition-colors
+                max-xl:text-sm max-xl:h-10 max-xl:px-2 max-xl:w-1/2
+              `}
               onClick={() => setWinnerIndex(null)}
             >
               Close
@@ -330,7 +333,10 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
               <>
                 <button
                   type="button"
-                  className="bg-purple-300 px-16 h-14 ring-purple-400 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-purple-400 transition-colors"
+                  className={`
+                    bg-purple-300 px-16 h-14 ring-purple-400 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-purple-400 transition-colors
+                    max-xl:h-10 max-xl:px-2 max-xl:w-1/2
+                  `}
                   onClick={() => {
                     handleHideOption(winnerIndex);
                     setWinnerIndex(null);
@@ -340,7 +346,10 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
                 </button>
                 <button
                   type="button"
-                  className="bg-red-500 px-16 h-14 ring-red-600 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-red-600 transition-colors"
+                  className={`
+                    bg-red-500 px-16 h-14 ring-red-600 hover:ring-1 p-2 rounded-lg font-medium text-sm hover:bg-red-600 transition-colors
+                    max-xl:h-10 max-xl:px-2 max-xl:w-1/2
+                  `}
                   onClick={() => {
                     handleRemoveOption(winnerIndex);
                     setWinnerIndex(null);
