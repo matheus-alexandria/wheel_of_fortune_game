@@ -1,4 +1,4 @@
-import { ArrowLeft } from "phosphor-react";
+import { ArrowDown, ArrowLeft } from "phosphor-react";
 import { useContext } from "react";
 
 import { WheelOptionsContext } from "../contexts/WheelOptionsContext";
@@ -20,6 +20,8 @@ export function OptionsMenu({
   handleWheelColors
 }: OptionMenuProps) {
   const optionsContext = useContext(WheelOptionsContext);
+
+  const isMobileStyle = window.innerWidth <= 1280;
 
   return (
     <>
@@ -50,15 +52,23 @@ export function OptionsMenu({
       </div>
 
       <button
-        className={`fixed right-28 transition-all ease-in transform ${
-          isModalOpen
-            ? "duration-300 translate-x-full opacity-0"
-            : "duration-500 translate-x-0 opacity-100"
-        }`}
+        className={`
+          fixed right-28 transition-all ease-in transform 
+          ${
+            isModalOpen
+              ? "duration-300 translate-x-full opacity-0"
+              : "duration-500 translate-x-0 opacity-100"
+          }
+          max-xl:-translate-x-14
+        `}
         onClick={() => handleOptionsModal(true)}
         disabled={isModalOpen}
       >
-        <ArrowLeft size={32} className="text-white" />
+        {isMobileStyle ? (
+          <ArrowLeft size={22} className="text-white" />
+        ) : (
+          <ArrowLeft size={32} className="text-white" />
+        )}
       </button>
     </>
   );
