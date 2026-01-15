@@ -58,39 +58,39 @@ export function MainPage() {
 
   return (
     <WheelOptionsProvider>
-      {wheelOptionsContext?.wheelOptions && (
-        <div
-          className={`
+      <div
+        className={`
             w-screen h-screen flex items-center justify-center bg-zinc-700 overflow-x-hidden
             max-xl:flex-col max-xl:h-full max-xl:py-14
           `}
+      >
+        <button
+          onClick={() => handleAudioVolume()}
+          className="fixed p-1 rounded-full bg-gray-500 bottom-10 left-[5%] hover:bg-gray-600 transition-colors"
         >
-          <button
-            onClick={() => handleAudioVolume()}
-            className="fixed p-1 rounded-full bg-gray-500 bottom-10 left-[5%] hover:bg-gray-600 transition-colors"
-          >
-            {audioVolume > 0 ? (
-              <SpeakerHigh size={32} className="text-white" />
-            ) : (
-              <SpeakerX size={32} className="text-white" />
-            )}
-          </button>
-          <div
-            className={`flex w-1/2 flex-col items-center justify-center gap-2 mr-4 transition-all duration-300 ${
-              isOptionsModalOpen ? "translate-x-0" : "translate-x-1/4"
-            }`}
-          >
-            <WheelOfFortune canvasSize={canvasSize} colors={colors} />
-          </div>
-
-          <OptionsMenu
-            isModalOpen={isOptionsModalOpen}
-            wheelColors={colors}
-            handleOptionsModal={handleOptionsModal}
-            handleWheelColors={handleWheelColors}
-          />
+          {audioVolume > 0 ? (
+            <SpeakerHigh size={32} className="text-white" />
+          ) : (
+            <SpeakerX size={32} className="text-white" />
+          )}
+        </button>
+        <div
+          className={`
+            flex w-1/2 flex-col items-center justify-center gap-2 mr-4 transition-all duration-300 
+            ${isOptionsModalOpen ? "translate-x-0" : "translate-x-1/4"}
+            max-xl:translate-x-0
+          `}
+        >
+          <WheelOfFortune canvasSize={canvasSize} colors={colors} />
         </div>
-      )}
+
+        <OptionsMenu
+          isModalOpen={isOptionsModalOpen}
+          wheelColors={colors}
+          handleOptionsModal={handleOptionsModal}
+          handleWheelColors={handleWheelColors}
+        />
+      </div>
     </WheelOptionsProvider>
   );
 }

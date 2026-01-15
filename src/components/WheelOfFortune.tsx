@@ -118,7 +118,8 @@ export function WheelOfFortune({ canvasSize, colors }: WheelOfFortuneProps) {
     draw.fill();
 
     draw.fillStyle = "white";
-    draw.font = "bold 16px Arial";
+    const spinFontSize = window.innerWidth > 1280 ? 16 : window.innerWidth / 40;
+    draw.font = `bold ${spinFontSize}px Arial`;
     draw.textAlign = "center";
     draw.fillText("SPIN", x, y);
 
