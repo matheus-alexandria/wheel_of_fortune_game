@@ -30,14 +30,22 @@ export function ColorPickerMenu({
   }
 
   return (
-    <div className="fixed flex-col bg-gray-400 p-3 rounded-md" ref={customRef}>
+    <div
+      className={`
+      fixed flex-col bg-gray-500 p-4 rounded-md
+      max-xl:-translate-x-28
+    `}
+      ref={customRef}
+    >
       <div className="flex items-start gap-3">
         {wheelColors.map((_, index) => {
           return (
             <button
               key={index}
               className={`h-8 w-8 flex items-center justify-center rounded-full p-3 text-white text-xl bg-black ${
-                colorOptionSelected === index ? "opacity-100" : "opacity-50"
+                colorOptionSelected === index
+                  ? "opacity-100"
+                  : "opacity-70 bg-gray-800"
               }`}
               onClick={() => setColorOptionSelected(index)}
             >
@@ -54,13 +62,13 @@ export function ColorPickerMenu({
         />
 
         <HexColorInput
-          className="w-[200px]"
+          className="w-[200px] rounded-sm border-none bg-gray-200"
           color={wheelColors[colorOptionSelected]}
           onChange={handlePickerColors}
         />
       </div>
       <button
-        className="p-2 rounded-md bg-green-500 text-white font-bold hover:bg-green-600 transition-colors mt-3"
+        className="w-full p-2 rounded-md bg-green-500 text-white font-bold hover:bg-green-600 transition-colors mt-3"
         onClick={() => handleApplyNewColors()}
       >
         Apply
